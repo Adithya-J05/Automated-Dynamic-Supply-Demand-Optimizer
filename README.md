@@ -22,38 +22,38 @@ An enterprise-grade, end-to-end pricing and inventory optimization engine built 
 ## 🏗️ System Architecture & Data Flow
 
 The system employs a decoupled, highly responsive architectural design built for low-latency inference and transaction throughput.
-              ┌────────────────────────────────────────┐
-              │      Frontend Dashboard (React/Vite)   │
-              │   Tailwind CSS • Recharts Analytics    │
-              └───────────────────┬────────────────────┘
-                                  │
-                                  │ REST API (JSON)
-                                  ▼
-              ┌────────────────────────────────────────┐
-              │          FastAPI Middleware            │
-              │ Pydantic Validation • Slowapi Rate Lim │
-              └───────┬────────────────────────┬───────┘
-                      │                        │
-    Read/Write Models │                        │ Read/Write Transactions
-                      ▼                        ▼
- ┌───────────────────────────┐      ┌───────────────────────────┐
- │    ML Inference Engine    │      │    PostgreSQL Database    │
- │  Gradient Boosting/RF     │      │   Indexed Relational Logs │
- │  Serialized (.joblib)     │      │   Relational Schema       │
- └─────────────▲─────────────┘      └─────────────▲─────────────┘
-               │                                  │
-               └─────────── Ingest & Load ────────┘
-                                   │
-                     ┌─────────────┴─────────────┐
-                     │   ETL Pipeline Engine     │
-                     │ Data Cleansing & Features │
-                     └─────────────▲─────────────┘
-                                   │
-                     ┌─────────────┴─────────────┐
-                     │    Raw Kaggle Dataset     │
-                     │    5.2M Rows (UK Retail)  │
-                     └───────────────────────────┘
-
+             '''
+                  ┌────────────────────────────────────────┐
+                  │      Frontend Dashboard (React/Vite)   │
+                  │   Tailwind CSS • Recharts Analytics    │
+                  └───────────────────┬────────────────────┘
+                                      │
+                                      │ REST API (JSON)
+                                      ▼
+                  ┌────────────────────────────────────────┐
+                  │          FastAPI Middleware            │
+                  │ Pydantic Validation • Slowapi Rate Lim │
+                  └───────┬────────────────────────┬───────┘
+                          │                        │
+        Read/Write Models │                        │ Read/Write Transactions
+                          ▼                        ▼
+     ┌───────────────────────────┐      ┌───────────────────────────┐
+     │    ML Inference Engine    │      │    PostgreSQL Database    │
+     │  Gradient Boosting/RF     │      │   Indexed Relational Logs │
+     │  Serialized (.joblib)     │      │   Relational Schema       │
+     └─────────────▲─────────────┘      └─────────────▲─────────────┘
+                   │                                  │
+                   └─────────── Ingest & Load ────────┘
+                                       │
+                         ┌─────────────┴─────────────┐
+                         │   ETL Pipeline Engine     │
+                         │ Data Cleansing & Features │
+                         └─────────────▲─────────────┘
+                                       │
+                         ┌─────────────┴─────────────┐
+                         │    Raw Kaggle Dataset     │
+                         │    5.2M Rows (UK Retail)  │
+                         └───────────────────────────┘ '''
 1. **Ingestion & ETL Layer:** Messy data from the Kaggle dataset is processed using Pandas and NumPy. Outliers are handled using the Interquartile Range (IQR) method, missing customer identities are systematically handled, and time-series engineering generates rolling windows.
 2. **Persistence Layer:** Cleaned and structured metrics are pushed into an indexed PostgreSQL instance, separating structural attributes from transactional logs.
 3. **ML Pipe & Inference:** Models are trained using Scikit-Learn (Gradient Boosting and Random Forest ensembles). Weights are serialized into high-performance `.joblib` files, which are loaded into memory by FastAPI upon worker initialization.
