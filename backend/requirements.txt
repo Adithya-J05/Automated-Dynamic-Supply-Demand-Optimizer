@@ -1,0 +1,29 @@
+# ==============================================================================
+# Supply-Demand Optimizer — Python Dependencies
+# Python 3.11+ required
+# Install with: pip install -r requirements.txt
+# ==============================================================================
+
+# --- Web Framework & Server ---
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+python-multipart==0.0.9          # Required for FastAPI form/file uploads
+
+# --- Database: PostgreSQL + ORM ---
+sqlalchemy==2.0.30               # Async-capable ORM (use 2.x style)
+psycopg2-binary==2.9.9           # PostgreSQL adapter (binary = no build tools needed)
+alembic==1.13.1                  # DB migration management
+
+# --- Data Validation ---
+pydantic==2.7.1                  # FastAPI uses Pydantic v2 natively
+pydantic-settings==2.2.1         # BaseSettings for env-var config management
+
+# --- Data Science & ML ---
+pandas
+numpy
+scikit-learn
+joblib==1.4.2                    # Model serialization (integrated with sklearn)
+
+# --- Utilities ---
+python-dotenv==1.0.1             # Load .env files for local development
+tqdm==4.66.4                     # Progress bars for ETL scripts
